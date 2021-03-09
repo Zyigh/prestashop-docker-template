@@ -44,8 +44,6 @@ services:
         container_name: prestashop_apache
         build:
             context: './.docker/apache'
-        ports:
-            - '8188:80'
         depends_on:
             - php-fpm
         networks:

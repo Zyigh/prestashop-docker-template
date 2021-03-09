@@ -1,6 +1,6 @@
 FROM php:7.3.27-fpm-alpine3.13
 
-WORKDIR /prestashop
+WORKDIR /
 
 RUN apk update && apk add --no-cache --virtual \
   acl \
@@ -42,7 +42,11 @@ RUN docker-php-ext-enable imagick
 ADD ./.docker/php-fpm/imagick/ /etc/ImageMagick-6/
 ADD ./.docker/php-fpm/conf/www.conf /usr/local/etc/php-fpm.d/www.conf
 
-ADD / .
+RUN git clone https://github.com/PrestaShop/PrestaShop.git prestashop
+
+WORKDIR /prestashop
+RUN git checkout 1.7.7.2
+RUN rm -rf .git
 
 RUN chown -R www-data .
 
